@@ -22,6 +22,35 @@ The reconstruction pipeline uses cascaded data consistency with a learned wavele
 
 ![Model architecture](figures/Model_Final.png)
 
+## Metric
+This project reports PSNR and SSIM on reconstructed images.
+
+### PSNR
+The peak signal-to-noise ratio (PSNR) is a ratio between the maximum possible power of a signal and the power of the distorting noise that affects its representation. As signals have a wide range of power, PSNR is measured in a logarithmic scale (dB).
+
+$$
+\mathrm{PSNR}(y', y) = 10 \times \log_{10}\left[\frac{\max(y)^2}{\mathrm{MSE}(y', y)}\right]
+$$
+
+### SSIM
+Mean Squared Error (MSE) may be easy to implement, but it does not provide information about perceived similarity. The Structural Similarity Index Measure (SSIM) is a full-reference metric; image quality is computed against a distortion-free reference image (the ground truth).
+
+$$
+\mathrm{SSIM}(x, y) = \frac{(2\mu_x \mu_y + c_1)(2\sigma_{xy} + c_2)}{(\mu_x^2 + \mu_y^2 + c_1)(\sigma_x^2 + \sigma_y^2 + c_2)}
+$$
+
+where
+
+$$
+\begin{array}{rl}
+\mu_x & = \text{average of } x \\
+\mu_y & = \text{average of } y \\
+\sigma_x & = \text{variance of } x \\
+\sigma_y & = \text{variance of } y \\
+c_1, c_2 & \text{ are two variables to stabilize the division.}
+\end{array}
+$$
+
 ## Result (Knee Multi-Coil)
 Example reconstruction result on knee multi-coil data.
 
