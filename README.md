@@ -58,9 +58,9 @@ Figures from the thesis are stored in `figures/`. The thesis PDF is available un
 If you use this repository, please cite the thesis:
 ```bibtex
 @thesis{your_name_2026,
-  title     = {Accelerated MRI Reconstruction using Deep Learning},
-  author    = {Your Name},
+  title     = {Variational Network with Wavelet-based UNET in Accelerated MRI Reconstruction from Under Sampled K-space Data},
+  author    = {Yasir Arafat Prodhan, Dr. Shaikh Anowarul Fattah},
   year      = {2026},
-  school    = {Your University}
+  school    = {Bangladesh University of Engineering & Technology}
 }
 ```
