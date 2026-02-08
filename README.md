@@ -1,22 +1,41 @@
-# Accelerated MRI Reconstruction (VarNet + WCNN)
+# Accelerated MRI Reconstruction with VarNet + Wavelet CNN
 
-This repository refactors the completed thesis notebooks into a clean, reproducible research codebase. It targets accelerated MRI reconstruction using a VarNet backbone with a Wavelet CNN (MWCNN) regularizer, trained on fastMRI-style datasets.
-
-## Method Summary
-- **Model**: VarNet with cascaded data consistency and a WCNN regularizer.
-- **Loss**: L1 + SSIM (fastMRI SSIMLoss), matching the notebooks.
-- **Metrics**: PSNR and SSIM computed slice-wise on reconstructed images.
+## Introduction
+This project implements accelerated MRI reconstruction from under-sampled k-space using a Variational Network (VarNet) backbone with a Wavelet CNN (MWCNN/WCNN) regularizer. The goal is to recover high-quality MR images while reducing scan time, validated on fastMRI-style knee and brain datasets.
 
 ## Dataset
-This code expects fastMRI-style HDF5 files and CSV manifests listing `file_name` and `acquisition`.
+The code expects fastMRI-style HDF5 files and CSV manifests listing `file_name` and `acquisition`.
 See `data/README.md` for the expected layout and file naming.
 
-## Installation
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+| Dataset | Anatomy | Modality | Train Vol. | Validation Vol. |
+| --- | --- | --- | --- | --- |
+| fastMRI [14] | Knee (Single-coil) | PD | 484 | 100 |
+| fastMRI [14] | Knee (Single-coil) | PDFS | 489 | 99 |
+| fastMRI [14] | Knee (Multi-coil) | PD | 158 | 29 |
+| fastMRI [14] | Knee (Multi-coil) | PDFS | 170 | 31 |
+| M4Raw [15] | Brain (Multi-coil) | AXT1 | 308 | 76 |
+| M4Raw [15] | Brain (Multi-coil) | AX FLAIR | 207 | 49 |
+| M4Raw [15] | Brain (Multi-coil) | AXT2 | 304 | 80 |
+
+## Model
+The reconstruction pipeline uses cascaded data consistency with a learned wavelet-domain regularizer.
+
+![Model architecture](figures/Model_Final.png)
+
+## Result (Knee Multi-Coil)
+Example reconstruction result on knee multi-coil data.
+
+![Knee multi-coil result](figures/knee_multi_result.png)
+
+## Folder Architecture
+- `src/models/`: VarNet, WCNN, and wavelet blocks
+- `src/datasets/`: fastMRI-style dataset loading
+- `src/losses/`, `src/metrics/`: SSIM/PSNR and training losses
+- `configs/`: dataset, model, and training configs
+- `scripts/`: training/validation scripts
+- `figures/`: model diagrams and result images
+- `notebooks/`: original experiments and exports
+- `paper/`, `pdfs/`: thesis and related documents
 
 ## Training
 Knee (default configs):
@@ -32,12 +51,13 @@ python -m src.train \
   --train-config configs/train_brain.yaml
 ```
 
-## Validation
+## Evaluation
+Validation:
 ```bash
 scripts/validate.sh /path/to/checkpoint.ckpt
 ```
 
-## Testing
+Testing:
 ```bash
 python -m src.test \
   --dataset-config configs/dataset.yaml \
@@ -46,16 +66,7 @@ python -m src.test \
   --checkpoint /path/to/checkpoint.ckpt
 ```
 
-## Reproducing Paper Results
-1. Populate `data/raw/` with the same CSV manifests used in the notebooks.
-2. Ensure acquisitions and mask settings match the original experiments.
-3. Run training with the corresponding configs (knee or brain).
-4. Use `src/validate.py` on the best checkpoint to report PSNR/SSIM.
-
-Figures from the thesis are stored in `figures/`. The thesis PDF is available under `paper/`.
-
 ## Citation
-If you use this repository, please cite the thesis:
 ```bibtex
 @thesis{your_name_2026,
   title     = {Variational Network with Wavelet-based UNET in Accelerated MRI Reconstruction from Under Sampled K-space Data},
