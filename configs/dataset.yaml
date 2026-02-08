@@ -1,0 +1,18 @@
+data_root: null
+train_csv: data/raw/train_knee_multi_coil.csv
+val_csv: data/raw/validation_knee_multi_coil.csv
+test_csv: data/raw/test_knee_multi_coil.csv
+acquisition:
+  - CORPD_FBK
+  - CORPDFS_FBK
+acquisition_index: 0
+challenge: singlecoil
+image_size:
+  - 256
+  - 256
+mask_type: equispaced
+center_fractions:
+  - 0.08
+accelerations:
+  - 4
+use_seed: true

@@ -1,0 +1,5 @@
+num_cascades: 4
+sens_chans: 6
+sens_pools: 3
+chans: 15
+pools: 3

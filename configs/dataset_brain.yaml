@@ -1,0 +1,19 @@
+data_root: null
+train_csv: data/raw/train_M4Raw.csv
+val_csv: data/raw/val_M4Raw.csv
+test_csv: data/raw/test_M4Raw.csv
+acquisition:
+  - AXFLAIR
+  - AXT1
+  - AXT2
+acquisition_index: 1
+challenge: multicoil
+image_size:
+  - 256
+  - 256
+mask_type: equispaced_fraction
+center_fractions:
+  - 0.1171875
+accelerations:
+  - 2
+use_seed: true
